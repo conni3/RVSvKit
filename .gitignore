@@ -1,0 +1,41 @@
+# Vivado project files
+*.jou
+*.log
+*.str
+*.cache/
+*.hw/
+*.ip_user_files/
+*.runs/
+*.sim/
+*.srcs/
+*.webtalk/
+*.Xil/
+*.xpr
+*.xsd
+*.xml
+*.wdb
+
+# Vivado-generated output
+*.bit
+*.bin
+*.mcs
+*.elf
+
+# Vivado installer
+Vivado_*.bin
+Vivado_*.tar.gz
+Vivado_*.zip
+
+# General
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Python (if using scripts)
+__pycache__/
+*.pyc
+
+# VS Code
+.vscode/
