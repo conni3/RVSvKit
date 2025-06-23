@@ -2,7 +2,7 @@
 
 [![Verilator CI](https://github.com/you/RVSvKit/actions/workflows/verilator.yml/badge.svg)]() [![Synthesis CI](https://github.com/you/RVSvKit/actions/workflows/vivado_docker.yml/badge.svg)]()
 
-Welcome to **RVSvKit**, a lightweight, parameterized SystemVerilog library for building RISC-V–style pipelines and peripherals. This kit provides modular building blocks, clear CI flows, and extensible protocol adapters to accelerate your RISC-V development :contentReference[oaicite:0]{index=0}.
+Welcome to **RVSvKit**, a lightweight, parameterized SystemVerilog library for building RISC-V–style pipelines and peripherals. This kit provides modular building blocks, clear CI flows, and extensible protocol adapters to accelerate your RISC-V development.
 
 ---
 
@@ -15,22 +15,22 @@ Welcome to **RVSvKit**, a lightweight, parameterized SystemVerilog library for b
   Integrate Verilator and Dockerized Vivado for CI and smoke synthesis.
 
 - **Extensible Protocol Adapters**  
-  Support TileLink ↔ AXI4-Lite, APB adapters, crossbars, and arbiters :contentReference[oaicite:1]{index=1}.
+  Support TileLink ↔ AXI4-Lite, APB adapters, crossbars, and arbiters.
 
 ---
 
 ## Key Features
 
 - **Composable Pipeline Primitives**  
-  Decoupled ready-valid registers, hazard detection, forwarding units, and a simple 5-stage core example :contentReference[oaicite:2]{index=2}.  
+  Decoupled ready-valid registers, hazard detection, forwarding units, and a simple 5-stage core example.  
 - **CSR & Trap Handler**  
   Base RISC-V privileged CSRs (mstatus, mtvec, mie, mip, mepc, mcause) with exception flow.  
 - **Protocol Adapters**  
-  TileLink ↔ AXI4-Lite and APB adapters, with generics for easy scaling :contentReference[oaicite:3]{index=3}.  
+  TileLink ↔ AXI4-Lite and APB adapters, with generics for easy scaling.  
 - **CI & Benchmarking**  
-  Functional regression, smoke synthesis, coverage gating, and area/timing thresholds :contentReference[oaicite:4]{index=4}.  
+  Functional regression, smoke synthesis, coverage gating, and area/timing thresholds.  
 - **Automation & Optimization**  
-  Scaffolding scripts, parameter sweeps, RTL optimization guidelines, and static-analysis reporting :contentReference[oaicite:5]{index=5}.  
+  Scaffolding scripts, parameter sweeps, RTL optimization guidelines, and static-analysis reporting.  
 
 ---
 
