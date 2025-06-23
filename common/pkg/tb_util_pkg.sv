@@ -5,6 +5,9 @@
 // Date      : 2025-06-20
 // Brief     : Testbench helper tasks (full-range & custom-range looping)
 //-------------------------------------------------------------------------
+`timescale 1ns/1ps
+
+
 package tb_util_pkg;
 
   //-------------------------------------------------------------------------
@@ -13,7 +16,7 @@ package tb_util_pkg;
   //   waiting `step` timeunits between each value.
   //-------------------------------------------------------------------------
   task automatic loop_all_values
-    (ref logic [31:0] sig,  // your signal (only lower W bits used)
+    (output logic [31:0] sig,  // your signal (only lower W bits used)
      input int          W,   // width in bits
      input time         step // delay between assignments
     );
@@ -25,7 +28,7 @@ package tb_util_pkg;
         #step;
       end
     end
-  endtask
+  endtask: loop_all_values
 
   //-------------------------------------------------------------------------
   // loop_range:
@@ -33,18 +36,20 @@ package tb_util_pkg;
   //   by `step`, waiting `delay` timeunits between each.
   //-------------------------------------------------------------------------
   task automatic loop_range
-    (ref int  var,      // the loop variable (passed by reference)
-     input  int  start, // first value
-     input  int  stop,  // last value (inclusive)
-     input  int  step,  // increment
-     input  time delay  // time to wait each iteration
+    (
+      inout int   loop_val, // reference variable to update
+      input  int   start,    // first value
+      input  int   stop,     // last value (inclusive)
+      input  int   step,     // increment
+      input  time  delay     // time to wait each iteration
     );
+    int v;
     begin
-      for (int v = start; v <= stop; v += step) begin
-        var = v;
+      for (v = start; v <= stop; v += step) begin
+        loop_val = v;
         #delay;
       end
     end
-  endtask
+  endtask: loop_range
 
 endpackage: tb_util_pkg

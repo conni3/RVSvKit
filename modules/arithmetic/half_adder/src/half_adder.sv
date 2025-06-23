@@ -20,5 +20,5 @@ module half_adder #(
   // This module is intended for single-bit addition.
   // For multi-bit addition, use a full adder or a ripple carry adder.
   // The carry output is a single bit, regardless of DATA_WIDTH.
-  
-end
+
+endmodule: half_adder

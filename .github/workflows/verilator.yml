@@ -1,0 +1,23 @@
+name: Verilator Lint & Simulation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verilator:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Install Verilator
+        run: |
+          sudo apt update
+          sudo apt install -y verilator
+
+      - name: Run Verilator Lint
+        run: |
+          make ci-verilator
+
