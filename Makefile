@@ -1,39 +1,62 @@
-# ─── Variables ───────────────────────────────────────────────────────────────
+#------------------------------------------------------------------------------
+# Unified Verilator Makefile: runs both sequential (main) and comb (minimal)
+#------------------------------------------------------------------------------
 
-TOP        := half_adder_tb
-SV_SRCS    := \
-  modules/arithmetic/half_adder/src/half_adder.sv \
-  modules/arithmetic/half_adder/tb/half_adder_tb.sv \
-  sim_main.cpp
+#–– Configuration ––
+VERILATOR_FLAGS := --cc --exe -sv --timing -Icommon/pkg
+VERILATED_DIR   := obj_dir
 
-VERILATOR  := verilator
-VER_FLAGS  := --cc --exe -sv \
-              -Icommon/pkg \
-              --trace      \
-              --Mdir obj_dir
-LINT_FLAGS := --lint-only -sv -Icommon/pkg
+# shared RTL: packages + src
+PKG_SV := $(shell find common/pkg -type f -name "*.sv")
+SRC_SV := $(shell find modules   -type f -path "*/src/*.sv")
+RTL_SV := $(PKG_SV) $(SRC_SV)
 
-BUILD_JOBS := -j8
+# find every *_tb.sv under modules via shell
+TB_SV     := $(shell find modules -type f -path "*/tb/*_tb.sv")
+ALL_TOPS  := $(patsubst %.sv,%,$(notdir $(TB_SV)))
 
-# ─── Targets ────────────────────────────────────────────────────────────────
+# classify sequential vs combinational
+SEQ_TB_SV  := $(shell grep -l "posedge clk" $(TB_SV) || true)
+SEQ_TOPS   := $(patsubst %.sv,%,$(notdir $(SEQ_TB_SV)))
+COMB_TOPS  := $(filter-out $(SEQ_TOPS),$(ALL_TOPS))
 
-.PHONY: all lint run clean
+# drivers
+DRIVER_FULL    := sim_main.cpp
+DRIVER_MINIMAL := sim_main_minimal.cpp
 
-all: obj_dir/V$(TOP)
+.PHONY: all clean $(SEQ_TOPS) $(COMB_TOPS)
 
-# Lint-only pass
-lint:
-	$(VERILATOR) $(LINT_FLAGS) $(SV_SRCS)
+# build & run everything
+all: $(SEQ_TOPS) $(COMB_TOPS)
 
-# Generate C++, build the simulator
-obj_dir/V$(TOP): $(SV_SRCS)
-	$(VERILATOR) $(VER_FLAGS) $(SV_SRCS)
-	$(MAKE) $(BUILD_JOBS) -C obj_dir -f V$(TOP).mk V$(TOP)
+# –– sequential testbenches ––
+$(SEQ_TOPS): %:
+	@echo "=== [SEQ] building + running $@ ==="
+	verilator $(VERILATOR_FLAGS) \
+	  --top-module $@ \
+	  --Mdir $(VERILATED_DIR) \
+	  $(RTL_SV) \
+	  modules/*/tb/$@.sv \
+	  $(DRIVER_FULL)
+	make -C $(VERILATED_DIR) -f V$@.mk -j$(shell nproc)
+	./$(VERILATED_DIR)/V$@
 
-# Build then execute
-run: all
-	@echo ">> Running simulation..."
-	@./obj_dir/V$(TOP)
+# –– combinational testbenches ––
+$(COMB_TOPS): %:
+	@echo "=== [COMB] building + running $@ ==="
+	@TB_PATH=`find modules -type f -path "*/tb/$@.sv" | head -n1` ; \
+	if [ -z "$$TB_PATH" ]; then \
+	  echo "❌ Could not locate testbench for $@"; exit 1; \
+	fi ; \
+	verilator $(VERILATOR_FLAGS) \
+	  --top-module $@ \
+	  --Mdir $(VERILATED_DIR) \
+	  $(RTL_SV) \
+	  "$$TB_PATH" \
+	  $(DRIVER_MINIMAL) ; \
+	make -C $(VERILATED_DIR) -f V$@.mk -j$(shell nproc) ; \
+	./$(VERILATED_DIR)/V$@
 
+# clean up
 clean:
-	rm -rf obj_dir
+	rm -rf $(VERILATED_DIR) *.vcd
