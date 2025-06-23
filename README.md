@@ -74,19 +74,19 @@ RVSvKit/
 
 ## Documentation
 
-Overview: project goals, features, and basic usage 
+- Overview: project goals, features, and basic usage 
 
-Module Inventory: catalog of all RTL leaf blocks
+- Module Inventory: catalog of all RTL leaf blocks
 
-Coding Conventions: style guide for SystemVerilog
+- Coding Conventions: style guide for SystemVerilog
 
-Packages & Interfaces: shared packages and bus-interface abstractions
+- Packages & Interfaces: shared packages and bus-interface abstractions
+ 
+- CI & Testing: continuous integration pipelines and gating thresholds
+ 
+- Automation & Optimization: scaffolding tools, sweeps, and RTL guidelines
 
-CI & Testing: continuous integration pipelines and gating thresholds
-
-Automation & Optimization: scaffolding tools, sweeps, and RTL guidelines
-
-Contributing & Versioning: how to contribute and release policy
+- Contributing & Versioning: how to contribute and release policy
 
 --- 
 
