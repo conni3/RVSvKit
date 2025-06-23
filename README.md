@@ -47,9 +47,13 @@ Welcome to **RVSvKit**, a lightweight, parameterized SystemVerilog library for b
 git clone https://github.com/you/RVSvKit.git
 cd RVSvKit
 make run
+```
 
-Folder Structure
+---
 
+## Folder Structure
+
+```
 RVSvKit/
 ├── common/                   # shared packages & utilities
 │   ├── pkg/                  # types, parameters, macros
@@ -64,10 +68,13 @@ RVSvKit/
 ├── .gitignore
 ├── LICENSE
 └── CONTRIBUTING.md
+```
 
-Documentation
+---
 
-    Overview: project goals, features, and basic usage 
+## Documentation
+
+Overview: project goals, features, and basic usage 
 
 Module Inventory: catalog of all RTL leaf blocks
 
@@ -80,11 +87,15 @@ CI & Testing: continuous integration pipelines and gating thresholds
 Automation & Optimization: scaffolding tools, sweeps, and RTL guidelines
 
 Contributing & Versioning: how to contribute and release policy
-Contributing
+
+--- 
+
+## Contributing
 
 We welcome internal team feedback. External contributions will open once we reach v1.0.0. See CONTRIBUTING.md for detailed guidelines
 
-.
-License
+--- 
+
+## License
 
 This project is licensed under the MIT License. See the LICENSE file for details.
