@@ -1,42 +1,39 @@
-# Collect every .sv under common/ and modules/
-SV_SOURCES := $(shell find common modules -name '*.sv')
+# ─── Variables ───────────────────────────────────────────────────────────────
 
+TOP        := half_adder_tb
+SV_SRCS    := \
+  modules/arithmetic/half_adder/src/half_adder.sv \
+  modules/arithmetic/half_adder/tb/half_adder_tb.sv \
+  sim_main.cpp
 
-ci-verilator:
-	@echo "🔍 Running Verilator lint..."
-	@if verilator --lint-only -sv \
-	     -Icommon/pkg \
-	     --no-timing \
-	     -Wno-STMTDLY \
-	     $(SV_SOURCES); \
-	then \
-	  echo "✅ Verilator lint passed! 🎉"; \
-	else \
-	  echo "❌ Verilator lint failed!"; \
-	  exit 1; \
-	fi
+VERILATOR  := verilator
+VER_FLAGS  := --cc --exe -sv \
+              -Icommon/pkg \
+              --trace      \
+              --Mdir obj_dir
+LINT_FLAGS := --lint-only -sv -Icommon/pkg
 
+BUILD_JOBS := -j8
 
-CI_TBS := $(shell find modules -type f -path '*/tb/*_tb.sv')
-$(info CI_TBS = [$(CI_TBS)])
+# ─── Targets ────────────────────────────────────────────────────────────────
 
-ci-icarus:
-	@echo "🔍 Running Icarus simulation on all testbenches..."
-	@for tb in $(CI_TBS); do \
-	  dir=$${tb%/tb/*}; \
-	  base=$$(basename $$tb); \
-	  name=$${base%_tb.sv}; \
-	  src=$${dir}/src/$${name}.sv; \
-	  if [ ! -f "$$src" ]; then \
-	    echo "❌ RTL not found: $$src"; \
-	    exit 1; \
-	  fi; \
-	  echo " • $$tb → $$src"; \
-	  iverilog -g2012 -Icommon/pkg \
-	    common/pkg/tb_util_pkg.sv \
-	    "$$src" \
-	    "$$tb" \
-	    -o "$$tb.out" && \
-	  vvp "$$tb.out" || exit 1; \
-	done
-	@echo "✅ All Icarus runs passed! 🎉"
+.PHONY: all lint run clean
+
+all: obj_dir/V$(TOP)
+
+# Lint-only pass
+lint:
+	$(VERILATOR) $(LINT_FLAGS) $(SV_SRCS)
+
+# Generate C++, build the simulator
+obj_dir/V$(TOP): $(SV_SRCS)
+	$(VERILATOR) $(VER_FLAGS) $(SV_SRCS)
+	$(MAKE) $(BUILD_JOBS) -C obj_dir -f V$(TOP).mk V$(TOP)
+
+# Build then execute
+run: all
+	@echo ">> Running simulation..."
+	@./obj_dir/V$(TOP)
+
+clean:
+	rm -rf obj_dir

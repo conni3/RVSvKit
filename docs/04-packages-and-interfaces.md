@@ -2,6 +2,8 @@
 title: 04-packages-and-interfaces
 draft: false
 weight: "7"
+aliases: [Packages & Interfaces]
+linter-yaml-title-alias: Packages & Interfaces
 ---
 # Packages & Interfaces
 
@@ -10,57 +12,56 @@ This document outlines the shared packages and bus-interface abstractions for **
 ## 1. Key Considerations
 
 - **Separation of Concerns**
-    
-    - `common/pkg/` holds pure types, parameters, macros.
-        
-    - `protocols/<bus>/interface/` defines signal bundles and handshakes.
-        
-    - `protocols/<bus>/adapters/` bridges two protocol domains—no mixed responsibilities.
-        
+	
+	- `common/pkg/` holds pure types, parameters, macros.
+		
+	- `protocols/<bus>/interface/` defines signal bundles and handshakes.
+		
+	- `protocols/<bus>/adapters/` bridges two protocol domains—no mixed responsibilities.
+		
 - **Parametrization & Scalability**
-    
-    - Expose `ADDR_WIDTH`, `DATA_WIDTH`, `XLEN`, `ID_WIDTH` in packages and interfaces for easy scaling.
-        
-    - Interfaces use generics (parameters) rather than hard-coded bus widths.
-        
+	
+	- Expose `ADDR_WIDTH`, `DATA_WIDTH`, `XLEN`, `ID_WIDTH` in packages and interfaces for easy scaling.
+		
+	- Interfaces use generics (parameters) rather than hard-coded bus widths.
+		
 - **Naming & Organization**
-    
-    - Package files: `<name>_pkg.sv` under `common/pkg/`.
-        
-    - Interface files: `<bus>_if.sv` under `protocols/<bus>/interface/`.
-        
-    - Adapter files: `<from>_to_<to>.sv` under `protocols/<bus>/adapters/`.
-        
+	
+	- Package files: `<name>_pkg.sv` under `common/pkg/`.
+		
+	- Interface files: `<bus>_if.sv` under `protocols/<bus>/interface/`.
+		
+	- Adapter files: `<from>_to_<to>.sv` under `protocols/<bus>/adapters/`.
+		
 - **Handshake Semantics**  
-    Clearly document valid-ready or ready-valid timing relationships in each interface.  
-    Use a shared `handshake_if` or utility tasks from packages to enforce back-pressure safely.
-    
+	Clearly document valid-ready or ready-valid timing relationships in each interface.  
+	Use a shared `handshake_if` or utility tasks from packages to enforce back-pressure safely.
+	
 - **Data & Control Field Mapping**  
-    Before coding adapters, tabulate how fields map:
-    
-    ```text
+	Before coding adapters, tabulate how fields map:
+	
+	```text
     TileLink.opcode → AXI4.awprot/arprot
     TileLink.size   → AXI4.awlen/arlen conversion
     ```
-    
+	
 - **Testing Strategy**
-    
-    - Behavioral testbenches for every interface and adapter in `protocols/<bus>/tb/`.
-        
-    - Use common verification tasks from `common/pkg/` to reduce duplication.
-        
+	
+	- Behavioral testbenches for every interface and adapter in `protocols/<bus>/tb/`.
+		
+	- Use common verification tasks from `common/pkg/` to reduce duplication.
+		
 - **Documentation & Diagrams**
-    
-    - Keep timing diagrams and mapping tables in `docs/protocols/`.
-        
-    - Reference spec sections (RISC‑V Privileged Spec, TileLink spec) alongside your prose.
-        
+	
+	- Keep timing diagrams and mapping tables in `docs/protocols/`.
+		
+	- Reference spec sections (RISC‑V Privileged Spec, TileLink spec) alongside your prose.
+		
 - **Version Control & Change Tracking**
-    
-    - Annotate package versions in header comments (e.g. `// Version 0.1.0`).
-        
-    - Maintain a `CHANGELOG.md` under `common/pkg/` for interface evolution.
-        
+	
+	- Annotate package versions in header comments (e.g. `// Version 0.1.0`).
+		
+	- Maintain a `CHANGELOG.md` under `common/pkg/` for interface evolution.
 
 ---
 
@@ -99,8 +100,8 @@ RVSvKit/
 ## 3. Interface Definition Guidelines
 
 1. **Header Comment**
-    
-    ```systemverilog
+	
+	```systemverilog
     //-------------------------------------------------------------------------
     // Interface : tilelink_if
     // Version   : 0.1.0
@@ -109,12 +110,12 @@ RVSvKit/
     // Brief     : Bundle for TileLink A/B/C/D/E channels with valid-ready.
     //-------------------------------------------------------------------------
     ```
-    
+	
 2. **Interface Block**
-    
-    - Parameterize widths:
-        
-        ```systemverilog
+	
+	- Parameterize widths:
+		
+		```systemverilog
         interface tilelink_if #(
           parameter int XLEN        = 32,
           parameter int TL_DATA_WIDTH = 64
@@ -126,18 +127,17 @@ RVSvKit/
           // … other fields …
         endinterface
         ```
-        
+		
 3. **Adapter Module**
-    
-    - Import relevant packages:
-        
-        ```systemverilog
+	
+	- Import relevant packages:
+		
+		```systemverilog
         import common_pkg::*;
         import interfaces_pkg::*;
         ```
-        
-    - Preserve valid-ready semantics between interfaces.
-        
+		
+	- Preserve valid-ready semantics between interfaces.
 
 ---
 
