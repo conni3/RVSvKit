@@ -16,7 +16,7 @@ package tb_util_pkg;
   //   waiting `step` timeunits between each value.
   //-------------------------------------------------------------------------
   task automatic loop_all_values
-    (output logic [31:0] sig,  // your signal (only lower W bits used)
+    (ref logic [31:0] sig,  // your signal (only lower W bits used)
      input int          W,   // width in bits
      input time         step // delay between assignments
     );
@@ -37,7 +37,7 @@ package tb_util_pkg;
   //-------------------------------------------------------------------------
   task automatic loop_range
     (
-      inout int   loop_val, // reference variable to update
+      ref int   loop_val, // reference variable to update
       input  int   start,    // first value
       input  int   stop,     // last value (inclusive)
       input  int   step,     // increment
