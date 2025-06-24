@@ -1,0 +1,44 @@
+issues:
+  - title: Scaffold ALU RTL
+    body: |
+      - [ ] Generate ALU skeleton with scaffold_module.py
+      - [ ] Implement ops: ADD, SUB, AND, OR, XOR
+      - [ ] Parameterize DATA_WIDTH
+      - [ ] Lint with svlint
+      - [ ] push PR
+    labels: area:RTL, priority:high, status:to-do
+    milestone: "Week 2: ALU Ops Expansion (July 1–5)"
+    assignee: "@me"
+    due_on: "2025-07-03T23:59:00Z"
+
+  - title: ALU testbench with assertions
+    body: |
+      - [ ] Write testbench
+      - [ ] Add assertions for each op case
+      - [ ] Lint with svlint
+      - [ ] push PR
+    labels: area:RTL, priority:high, status:to-do
+    milestone: "Week 2: ALU Ops Expansion (July 1–5)"
+    assignee: "@me"
+    due_on: "2025-07-04T23:59:00Z"
+
+  - title: Add SLT and shift ops to ALU
+    body: |
+      - [ ] Implement SLT and SLTU
+      - [ ] Implement SLL, SRL, SRA
+      - [ ] Update testbench with new cases
+      - [ ] push PR
+    labels: area:RTL, priority:medium, status:to-do
+    milestone: "Week 2: ALU Ops Expansion (July 1–5)"
+    assignee: "@me"
+    due_on: "2025-07-05T23:59:00Z"
+
+  - title: Prepare parametric sweep config for adder
+    body: |
+      - [ ] Draft sweep JSON in scripts/sweeps/adder_sweep.json
+      - [ ] Test sweep_params.py with small DATA_WIDTH set
+      - [ ] Document results
+    labels: area:automation, priority:low, status:to-do
+    milestone: "Week 2: ALU Ops Expansion (July 1–5)"
+    assignee: "@me"
+    due_on: "2025-07-05T23:59:00Z"
