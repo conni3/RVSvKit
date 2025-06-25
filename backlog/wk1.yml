@@ -1,14 +1,17 @@
 issues:
-
   - title: Finish half_adder RTL
     body: |
       - [ ] Finalize logic
       - [ ] Add assertions in testbench
       - [ ] Lint with svlint
       - [ ] push PR
-    labels: area:RTL, priority:high, status:Todo
-    milestone: "Week 1: ALU Basics (June 24–28)"
+    gh_labels:
+      - area:RTL
+      - priority:medium
+      - status:Todo
+    fields: area:RTL,priority:medium,status:Todo
     assignee: "@me"
+    milestone: "Week 1: ALU Basics (June 24–28)"
     due_on: "2025-06-26T23:59:00Z"
 
   - title: Dockerized Vivado smoke test decision
@@ -16,9 +19,13 @@ issues:
       - [ ] Evaluate stability of current modules
       - [ ] Decide if vivado_docker.yml should run now or after more modules
       - [ ] Document decision in README
-    labels: area:CI, priority:medium, status:Todo
-    milestone: "Week 1: ALU Basics (June 24–28)"
+    gh_labels:
+      - area:CI
+      - priority:medium
+      - status:Todo
+    fields: area:CI,priority:medium,status:Todo
     assignee: "@me"
+    milestone: "Week 1: ALU Basics (June 24–28)"
     due_on: "2025-06-27T23:59:00Z"
 
   - title: Scaffold full_adder RTL
@@ -27,9 +34,13 @@ issues:
       - [ ] Implement logic
       - [ ] Lint with svlint
       - [ ] push PR
-    labels: area:RTL, priority:medium, status:Todo
-    milestone: "Week 1: ALU Basics (June 24–28)"
+    gh_labels:
+      - area:RTL
+      - priority:medium
+      - status:Todo
+    fields: area:RTL,priority:medium,status:Todo
     assignee: "@me"
+    milestone: "Week 1: ALU Basics (June 24–28)"
     due_on: "2025-06-27T23:59:00Z"
 
   - title: full_adder testbench
@@ -38,9 +49,13 @@ issues:
       - [ ] Add assertions
       - [ ] Lint with svlint
       - [ ] push PR
-    labels: area:RTL, priority:medium, status:Todo
-    milestone: "Week 1: ALU Basics (June 24–28)"
+    gh_labels:
+      - area:RTL
+      - priority:medium
+      - status:Todo
+    fields: area:RTL,priority:medium,status:Todo
     assignee: "@me"
+    milestone: "Week 1: ALU Basics (June 24–28)"
     due_on: "2025-06-28T23:59:00Z"
 
   - title: Scaffold adder RTL
@@ -49,9 +64,13 @@ issues:
       - [ ] Implement logic (parameterized)
       - [ ] Lint with svlint
       - [ ] push PR
-    labels: area:RTL, priority:medium, status:Todo
-    milestone: "Week 1: ALU Basics (June 24–28)"
+    gh_labels:
+      - area:RTL
+      - priority:medium
+      - status:Todo
+    fields: area:RTL,priority:medium,status:Todo
     assignee: "@me"
+    milestone: "Week 1: ALU Basics (June 24–28)"
     due_on: "2025-06-28T23:59:00Z"
 
   - title: adder testbench
@@ -60,15 +79,23 @@ issues:
       - [ ] Add assertions for sum, carry
       - [ ] Lint with svlint
       - [ ] push PR
-    labels: area:RTL, priority:medium, status:Todo
-    milestone: "Week 1: ALU Basics (June 24–28)"
+    gh_labels:
+      - area:RTL
+      - priority:medium
+      - status:Todo
+    fields: area:RTL,priority:medium,status:Todo
     assignee: "@me"
+    milestone: "Week 1: ALU Basics (June 24–28)"
     due_on: "2025-06-28T23:59:00Z"
 
   - title: Restructure repo
     body: |
       - [ ] Move simulation files to sim/ directory
-      - [ ] push PR 
-    labels: area:repo, priority:low, status:Todo
+      - [ ] push PR
+    gh_labels:
+      - area:repo
+      - priority:low
+      - status:Todo
+    fields: area:repo,priority:low,status:Todo
     assignee: "@me"
     milestone: "Week 1: ALU Basics (June 24–28)"
