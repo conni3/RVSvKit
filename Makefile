@@ -12,7 +12,7 @@ SRC_SV := $(shell find modules   -type f -path "*/src/*.sv")
 RTL_SV := $(PKG_SV) $(SRC_SV)
 
 # find every *_tb.sv under modules via shell
-TB_SV     := $(shell find modules -type f -path "*/tb/*_tb.sv")
+TB_SV     := $(shell find modules -type f -path "*/*/tb/*_tb.sv")
 ALL_TOPS  := $(patsubst %.sv,%,$(notdir $(TB_SV)))
 
 # classify sequential vs combinational
@@ -36,7 +36,7 @@ $(SEQ_TOPS): %:
 	  --top-module $@ \
 	  --Mdir $(VERILATED_DIR) \
 	  $(RTL_SV) \
-	  modules/*/tb/$@.sv \
+	  modules/*/*/tb/$@.sv \
 	  $(DRIVER_FULL)
 	make -C $(VERILATED_DIR) -f V$@.mk -j$(shell nproc)
 	./$(VERILATED_DIR)/V$@
